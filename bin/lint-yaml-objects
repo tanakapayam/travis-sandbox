@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#
+# lint YAML objects
+
+
+# common bash settiings
+# shellcheck disable=SC1091
+. etc/common.sh
+
+
+sudo pip install --upgrade pip
+sudo pip install yamllint
+yamllint --version
+
+yamllint .travis.yml
+
+
+# https://support.travis-ci.com/hc/en-us/articles/115002904174-Validating-travis-yml-files
+gem install travis
+travis version \
+  --skip-completion-check
+
+travis lint \
+  --skip-completion-check \
+  .travis.yml

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#
+# build docker images
+
+
+# common bash settiings
+# shellcheck disable=SC1091
+. etc/common.sh
+
+
+node --version
+npm --version
+
+
+# docker: build image
+docker build \
+  --file Dockerfile \
+  --tag "$TRAVIS_REPO_SLUG:latest" \
+  .
+
+
+# snyk: check for security vulnerabilities
+npm install \
+      --global \
+      snyk
+
+snyk test \
+  --docker \
+  "$TRAVIS_REPO_SLUG:latest" \
+  || true

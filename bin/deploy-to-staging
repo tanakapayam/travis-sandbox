@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#
+# deploy to EKS staging cluster
+
+
+# common bash settiings
+# shellcheck disable=SC1091
+. etc/common.sh
+
+
+sudo snap install aws-cli --classic
+aws --version
+
+sudo snap install kubectl --classic
+kubectl version --client --short

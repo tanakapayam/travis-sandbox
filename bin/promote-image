@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# promote image to ECR preprod, demo and prod
+
+
+# common bash settiings
+# shellcheck disable=SC1091
+. etc/common.sh
+
+
+sudo snap install aws-cli --classic
+aws --version
+
+sudo snap install kubectl --classic
+kubectl version --client --short
+
+echo "$TRAVIS_REPO_SLUG:latest"

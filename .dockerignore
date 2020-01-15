@@ -1,0 +1,7 @@
+# ya basic
+.dockerignore
+.DS_Store
+.git/
+.travis.yml
+Dockerfile
+README.md

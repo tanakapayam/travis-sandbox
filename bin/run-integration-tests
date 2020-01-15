@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# run integration tests
+
+
+# common bash settiings
+# shellcheck disable=SC1091
+. etc/common.sh

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#
+# lint Dockerfiles
+
+
+# common bash settiings
+# shellcheck disable=SC1091
+. etc/common.sh
+
+
+docker run \
+  --interactive \
+  --rm \
+  hadolint/hadolint \
+  < Dockerfile

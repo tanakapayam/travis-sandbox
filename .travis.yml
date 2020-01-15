@@ -1,0 +1,81 @@
+---
+git: {depth: 2}
+services: docker
+
+cache:
+  - npm
+  - pip
+language: python
+node_js: "12"
+python: 3.8
+
+branches:
+  only:
+    - staging
+    - master
+    - /feature|hotfix/
+
+jobs:
+  allow_failures:
+    - name: lint bash scripts
+      script: bin/lint-bash-scripts
+    - name: lint yaml objects
+      script: bin/lint-yaml-objects
+    - name: lint dockerfiles
+      script: bin/lint-dockerfiles
+    - name: lint markdown docs
+      script: bin/lint-markdown-docs
+    - name: promote image
+      script: bin/promote-image
+
+  fast_finish: true
+
+  include:
+    - name: run unit tests
+      script: bin/run-unit-tests
+      stage: run unit tests
+    - name: lint bash scripts
+      script: bin/lint-bash-scripts
+    - name: lint yaml objects
+      script: bin/lint-yaml-objects
+    - name: lint dockerfiles
+      script: bin/lint-dockerfiles
+    - name: lint markdown docs
+      script: bin/lint-markdown-docs
+
+    - script: bin/build-image
+      stage: build image
+
+    - script: bin/run-integration-tests
+      stage: run integration tests
+
+    - script: bin/deploy-to-staging
+      stage: deploy to staging
+
+    - script: bin/deploy-to-test
+      stage: deploy to test
+
+    - script: bin/promote-image
+      stage: promote image
+
+stages:
+  - if: branch != master
+    name: run unit tests
+
+  - if: branch != master
+    name: lint
+
+  - if: branch = staging
+    name: build image
+
+  - if: branch = staging
+    name: run integration tests
+
+  - if: branch = staging
+    name: deploy to staging
+
+  - if: branch = master
+    name: deploy to test
+
+  - if: branch = master
+    name: promote image

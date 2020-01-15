@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#
+# lint BASH scripts
+
+
+# common bash settiings
+# shellcheck disable=SC1091
+. etc/common.sh
+
+
+shellcheck bin/*
